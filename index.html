@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMK Negeri 1 Lubuk Pakam</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<style>
+body{
+ background: #da1414;
+  color: #fff;
+}
+
+.section-page {
+  display: none;
+  background: transparenst;
+
+}
+
+.staff-avatar{
+width:120px;height:120px;border-radius:50%;object-fit:cover;
+}
+
+.stat-card{
+background:#025175;padding:20px;border-radius:12px;
+box-shadow:0 5px 15px rgba(255, 255, 255, 0.05);
+}
+
+.fasilitas-card{
+border:1px solid #e0e0e0;border-radius:12px;
+background:rgb(233, 171, 37);transition:0.3s;
+}
+
+.fasilitas-card:hover{
+transform:translateY(-5px);
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* SLIDER */
+.slider-img{
+    height: 15/0vh;
+    object-fit: cover;
+}
+
+.icon-circle {
+    width: 90px;
+    height: 90px;
+    background: #000000; /* oranye terang */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    color: #fff; /* ikon tetap putih agar kontras */
+}
+
+.login-modal-content {
+  border-radius: 15px;
+  background: linear-gradient(135deg, #6086fa, #062fa0); 
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5); 
+}
+
+#loadingOverlay {
+  display: none;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.25);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  opacity: 0;
+  pointer-events: none; 
+  transition: opacity 0.3s ease;
+}
+
+#loadingOverlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.login-modal-content input.form-control {
+  background: rgba(255,255,255,0.9);
+  color: #000;
+}
+
+#loginBtn {
+  background: linear-gradient(135deg, #346fee, #216bf5);
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+#loginBtn:hover {
+  background: linear-gradient(135deg, #faf7f7, #0724c7);
+  color: #fff;
+}
+
+/* Bounce animation untuk teks loading */
+@keyframes bounceText {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+/* SLIDER */
+.slider-img{
+    height: 120vh;
+    object-fit: cover;
+}
+/* SECTION */
+section{
+    padding: 80px 0;
+}
+
+.card {
+    background: #0044ff;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+    width: 100%;
+    min-height: 350px;
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.card-body {
+    min-height: 100px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.kepsek-img{
+    max-width: 250px;
+}
+
+.logo-smk{
+    max-width: 150px;
+}
+
+.kepsek-line{
+    width: 60px;
+    margin: auto;
+    height: 3px;
+    background: #0d6efd;
+}
+
+.section-page{
+    display: none;
+}
+
+footer{
+background:#111;color:#fff;
+padding:40px 0;margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background:#111;">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="javascript:void(0)" onclick="showPage('homePage')">
+      SMK Negeri 1 Lubuk Pakam
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)" onclick="showPage('homePage')">
+            <i class="bi bi-house"></i> Beranda
+          </a>
+        </li>
+
+        <!-- PROFIL -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            Profil
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showPage('sejarahPage')">Sejarah</a></li>
+            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showPage('visiMisiPage')">Visi & Misi</a></li>
+          </ul>
+        </li>
+
+        <!-- JURUSAN -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            Jurusan
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" onclick="showPage('rplPage')">Rekayasa Perangkat Lunak</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tkjPage')">Teknik Komputer Jaringan</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tabPage')">Teknik Alat Berat</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tbsmPage')">Teknik Bisnis Sepeda Motor</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tkkrPage')">Teknik Kecantikan Kulit dan Rambut</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tkroPage')">Teknik Kendaraan Ringan Otomotif</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('pemesinanPage')">Teknik Pemesinan</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('titlPage')">Teknik Instalasi Tenaga Listrik</a></li>
+             <li><a class="dropdown-item" href="#" onclick="showPage('tjtlPage')">Teknik Jaringan Tenaga Listrik</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tavPage')">Teknik Audio Video</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tpPage')">Teknik Pengelasan</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('dpibPage')">Desain Pemodelan dan Informasi Bangunan</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showPage('tkpPage')">Teknik Kontruksi dan Perumahan</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showPage('staffPage')">Staff</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showPage('guruPage')">Guru</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showPage('fasilitasPage')">Fasilitas</a>
+        </li>
+
+        <!-- LOGIN SI-AKAD MODAL TRIGGER -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <i class="bi bi-box-arrow-in-right"></i> Login SI-AKAD
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ================= BERANDA ================= -->
+<div id="homePage" class="section-page" style="display:block;">
+<div class="container text-center py-5">
+    <h1>Halo! Selamat Datang</h1>
+    <p class="mt-3">
+        Portal untuk pengumuman terkini dari sekolah, termasuk informasi tentang acara,
+        pengumuman penting, perubahan jadwal, dan informasi lain yang relevan.
+    </p>
+    <a href="#" class="d-inline-block mt-3 text-decoration-none text-info">
+        Informasi lebih lanjut <i class="bi bi-chevron-down"></i>
+    </a>
+</div>
+
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"></button>
+  </div>
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="img/home.jpg" class="d-block w-100" height="450">
+    </div>
+    <div class="carousel-item">
+      <img src="img/menara.jpg" class="d-block w-100" height="450">
+    </div>
+    <div class="carousel-item">
+      <img src="img/pumplek.jpg" class="d-block w-100" height="450">
+    </div>
+    <div class="carousel-item">
+      <img src="img/foto.jpg" class="d-block w-100" height="450">
+    </div>
+  </div>
+
+  <!-- NAVIGATION ARROWS -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+
+</div>
+
+<!-- BERITA -->
+<section class="py-5">
+<div class="container">
+<h3 class="fw-bold mb-4 text-info">📰 Berita Terbaru</h3>
+<div class="row g-4">
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/spmb.jpg" class="card-img-top">
+<div class="card-body">
+<h6>Dibuka Pendaftaran SPMB 2026</h6>
+<p class="small">Sistem Penerimaan Murid Baru 2026</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/lomba.jpg" class="card-img-top">
+<div class="card-body">
+<h6>Selamat & Sukses Siswa/Siswi SMKN 1 LUBUKPAKAM</h6>
+<p class="small">Lomba Tingkat Kab.Deli Serdang Tahun 2025</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/snbp.png" class="card-img-top">
+<div class="card-body">
+<h6>Selamat & Sukses Siswa/Siswi SMKN 1 LUBUKPAKAM</h6>
+<p class="small">Lulus SNBP Tahun 2024</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/kerja.jpg" class="card-img-top">
+<div class="card-body">
+<h6>Selamat & Sukses Alumni SMKN 1 LUBUKPAKAM</h6>
+<p class="small">Diterima di PT. CIPTA PUTRA PALEMBANG</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/lulus.jpg" class="card-img-top">
+<div class="card-body">
+<h6>Selamat & Sukses Siswa/Siswi SMKN 1 LUBUKPAKAM</h6>
+<p class="small">Lulus SNBT Tahun 2025</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/lks.png" class="card-img-top">
+<div class="card-body">
+<h6>Selamat & Sukses Siswa/Siswi SMKN 1 LUBUKPAKAM</h6>
+<p class="small">Lulus SNBP Tahun 2024</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/snbp 2025.png" class="card-img-top">
+<div class="card-body">
+<h6>Selamat & Sukses Siswa/Siswi SMKN 1 LUBUKPAKAM</h6>
+<p class="small">Lulus SNBP Tahun 2025</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card h-100">
+<img src="img/upacara.jpg" class="card-img-top">
+<div class="card-body">
+<h6>Upacara Memperingati Hari UlangTahun Repbulik Indonesia Ke-80</h6>
+<p class="small">SMKN 1 LUBUKPAKAM</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+</div>
+
+<!-- ================= SEJARAH ================= -->
+<div id="sejarahPage" class="section-page">
+<div class="container py-5">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold mb-4">Sejarah Sekolah</h2>
+
+<p>
+SMK Negeri 1 Lubuk Pakam merupakan salah satu sekolah menengah kejuruan negeri 
+yang berada di Kabupaten Deli Serdang, Sumatera Utara. Sekolah ini didirikan 
+dengan tujuan untuk menyediakan pendidikan kejuruan yang berkualitas serta 
+mempersiapkan generasi muda yang siap bersaing di dunia kerja maupun melanjutkan pendidikan ke jenjang yang lebih tinggi.
+</p>
+
+<p>
+Sejak awal berdirinya, SMK Negeri 1 Lubuk Pakam berkomitmen untuk 
+mengembangkan kompetensi siswa sesuai dengan kebutuhan industri dan dunia usaha. 
+Berbagai program keahlian dibuka secara bertahap untuk menjawab tantangan 
+perkembangan teknologi dan kebutuhan pasar kerja yang terus berubah.
+</p>
+
+<p>
+Dalam perjalanannya, sekolah ini mengalami perkembangan yang signifikan, 
+baik dari segi jumlah siswa, tenaga pendidik, maupun sarana dan prasarana. 
+Fasilitas pembelajaran terus ditingkatkan, termasuk ruang praktik, laboratorium, 
+serta kerja sama dengan berbagai perusahaan dan instansi guna mendukung 
+program Praktik Kerja Lapangan (PKL).
+</p>
+
+<p>
+Prestasi demi prestasi berhasil diraih oleh siswa-siswi SMK Negeri 1 Lubuk Pakam 
+di berbagai bidang, baik akademik maupun non-akademik. Hal ini menunjukkan 
+bahwa sekolah tidak hanya fokus pada keterampilan teknis, tetapi juga pada 
+pembentukan karakter, kedisiplinan, dan jiwa kewirausahaan.
+</p>
+
+<p>
+Hingga saat ini, SMK Negeri 1 Lubuk Pakam terus bertransformasi menjadi 
+pusat pendidikan kejuruan unggulan yang adaptif terhadap perkembangan zaman, 
+dengan tetap menjunjung tinggi nilai integritas, profesionalisme, dan semangat 
+pelayanan dalam dunia pendidikan.
+</p>
+
+</div>
+</div>
+
+<!-- ================= VISI MISI ================= -->
+<div id="visiMisiPage" class="section-page">
+<div class="container py-5">
+
+<button class="btn btn-outline-dark mb-4"
+onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<div class="row">
+
+<div class="col-md-4 text-center border-end">
+
+<img src="img/kepsek.png"
+class="img-fluid rounded shadow mb-3 kepsek-img"
+alt="Foto Kepala Sekolah">
+
+<h5 class="fw-bold mt-3">Rasimah, SE</h5>
+<hr class="kepsek-line">
+
+<p class="mt-3">
+Kepala Sekolah<br>
+SMK Negeri 1 Lubuk Pakam
+</p>
+
+</div>
+
+<div class="col-md-8 ps-md-5">
+
+<h2 class="fw-bold mb-4">
+Logo SMK Negeri 1 Lubuk Pakam
+</h2>
+
+<img src="img/logosmk.png"
+class="img-fluid mb-4 logo-smk"
+alt="Logo SMK">
+
+<h3 class="fw-bold mt-4">Visi</h3>
+<p class="fs-5">
+Menjadi pusat pendidikan kejuruan unggulan yang menghasilkan lulusan yang kompeten, berkarakter, dan siap bersaing dalam dunia kerja global.
+</p>
+
+<h3 class="fw-bold mt-4">Misi</h3>
+<ul>
+<li>Memberikan pendidikan kejuruan berkualitas sesuai tuntutan pasar kerja.</li>
+<li>Mengembangkan keterampilan, pengetahuan, dan sikap profesional siswa.</li>
+<li>Membangun kerja sama dengan industri dan dunia usaha.</li>
+<li>Menanamkan nilai integritas, disiplin, dan tanggung jawab.</li>
+<li>Mendorong kreativitas dan kewirausahaan siswa.</li>
+<li>Menyediakan layanan bimbingan dan pembinaan karir.</li>
+<li>Menciptakan lingkungan sekolah yang aman dan inklusif.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- ================= STAFF ================= -->
+<div id="staffPage" class="section-page">
+<div class="container py-5">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold mb-3">Staff Sekolah</h2>
+
+<div class="table-responsive">
+<table id="staffTable" class="table table-striped table-bordered">
+<thead class="table-light">
+<tr>
+<th>No.</th>
+<th>NIP</th>
+<th>NUPTK</th>
+<th>NAMA</th>
+<th>ALAMAT</th>
+<th>JABATAN / FUNGSIONAL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>Agus Salim</td>
+<td>Jalan Keramat Lingkungan III</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>-</td>
+<td>-</td>
+<td>Aulia Husna</td>
+<td>JL.T. IMAM BONJOL LUBUK PAKAM</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>-</td>
+<td>-</td>
+<td>DEDI PURNAMA</td>
+<td>Dusun I B</td>
+<td>Toolman Teknik Pengelasan dan Fabrikasi Logam</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>-</td>
+<td>-</td>
+<td>Desi Nopanda</td>
+<td>Pendidikan Ling VII</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>-</td>
+<td>-</td>
+<td>ELFANDO NAINGGOLAN</td>
+<td>Dusun V Gg. Parsaroan</td>
+<td>Toolman Teknik Audio Video</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>-</td>
+<td>-</td>
+<td>Eva Safitri</td>
+<td>JL. BESAR PETUMBUKAN NO.33</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>-</td>
+<td>-</td>
+<td>ISTI DWIMAYANG SUHARDIYANTI</td>
+<td>Jl. STM Gg. Inpres No.10</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>-</td>
+<td>-</td>
+<td>MUJI SATRIO</td>
+<td>Jl. Bakti II Gg. Kenangan</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>196604041986022004</td>
+<td>5844746646300002</td>
+<td>Murdiati</td>
+<td>JL. BAKTI GG. DAME SEKIP</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>Jalan Galang No. 275</td>
+<td>-</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+
+<!-- ================= GURU ================= -->
+<div id="guruPage" class="section-page">
+<div class="container py-5">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h4 class="mb-4">Data Guru SMK Negeri 1 Lubuk Pakam</h4>
+
+<div class="table-responsive">
+<table id="tabelGuru" class="table table-bordered table-striped">
+<thead class="table-light text-center">
+<tr>
+<th>No.</th>
+<th>NIP</th>
+<th>NUPTK</th>
+<th>Nama</th>
+<th>Alamat</th>
+<th>Mata Pelajaran</th>
+<th>Jabatan/Fungsional</th>
+<th>E-mail</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td>197502042009041001</td>
+<td>0734753654200022</td>
+<td>Abidan Simbolon</td>
+<td>DUSUN IV JL PURWO BAKARAN BATU</td>
+<td>Teknik Pemesinan</td>
+<td>Kepala Bengkel Teknik Pemesinan</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>197611272006042026</td>
+<td>9459754656300073</td>
+<td>Advennov Friani Silalahi</td>
+<td>JL. SIANTAR GG. SEPAKAT</td>
+<td>Matematika</td>
+<td>Ketua MGMP Matematika</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>-</td>
+<td>6137778679130013</td>
+<td>Alberth Pratama Silalahi</td>
+<td>Jl. Bersama Lk.II No.32</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>4853761662200022</td>
+<td>-</td>
+<td>Alexander Purba</td>
+<td>JL. GALANG GANG KATU LUBUK PAKAM</td>
+<td>Teknik Kendaraan Ringan</td>
+<td>Kepala Bengkel Teknik Kendaraan Ringan</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>196812021994022001</td>
+<td>3533746649300093</td>
+<td>Ani Suraini</td>
+<td>JL. KERAMAT</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+
+<!-- ================= FASILITAS ================= -->
+<div id="fasilitasPage" class="section-page">
+<div class="container py-5">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Daftar Fasilitas SMK Negeri 1 Lubuk Pakam
+</h2>
+
+<div class="row g-5 justify-content-center">
+
+<div class="col-md-5">
+<div class="fasilitas-card text-center p-5">
+<div class="icon-circle mb-4">
+<i class="bi bi-hospital fs-2"></i>
+</div>
+<h4 class="fw-bold">Unit Kesehatan Sekolah</h4>
+<p class="fw-semibold text-muted">Jumlah : 1 Unit</p>
+<p>UKS Sekolah dengan anggota PMR.</p>
+</div>
+</div>
+
+<div class="col-md-5">
+<div class="fasilitas-card text-center p-5">
+<div class="icon-circle mb-4">
+<i class="bi bi-book fs-2"></i>
+</div>
+<h4 class="fw-bold">Perpustakaan</h4>
+<p class="fw-semibold text-muted">Jumlah : 1 Unit</p>
+<p>Perpustakaan nyaman dengan koleksi buku lengkap.</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ================= LOGIN SI-AKAD MODAL ================= -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content login-modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">Login SI-AKAD</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body position-relative">
+
+        <!-- FORM LOGIN -->
+        <div id="loginFormContent">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" id="username" class="form-control" placeholder="Masukkan username">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <input type="password" id="password" class="form-control" placeholder="Masukkan password">
+              <button class="btn btn-outline-light" type="button" onclick="togglePassword()">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label">Ingat saya</label>
+          </div>
+        </div>
+
+        <!-- LOADING OVERLAY -->
+        <div id="loadingOverlay">
+          <div class="spinner-border text-light spinner-lg" role="status"></div>
+          <p class="loading-text mt-3">Memeriksa akun...</p>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-dark" data-bs-dismiss="modal">Batal</button>
+        <button class="btn btn-light text-dark fw-bold" id="loginBtn">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= JURUSAN ================= -->
+
+<!-- ================= RPL ================= -->
+<div id="rplPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Rekayasa Perangkat Lunak (RPL)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Rizky Achmad Risal,S.Kom</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Fiqyh Kartika Br. Siahaan, S.Kom</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Fatya Alfira Aleyda Siregar,S.Tr.Kom</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan Rekayasa Perangkat Lunak memberikan pemahaman mendalam tentang konsep-konsep dasar dalam pengembangan perangkat lunak, serta mengajarkan keterampilan dalam merancang, mengembangkan, dan memelihara berbagai jenis aplikasi perangkat lunak mulai dari sistem keamanan cyber hingga aplikasi mobile. Dengan fokus pada teknologi dan metodologi terkini, siswa jurusan ini dipersiapkan untuk menjadi ahli dalam memecahkan tantangan kompleks dalam dunia teknologi informasi dan berkontribusi pada inovasi di berbagai bidang industri.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">3</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">106</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TKJ ================= -->
+<div id="tkjPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Komputer dan Jaringan (TKJ)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Sulistiani, ST</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Yunilawati, ST</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Rozie Winanda,Amd</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan Teknik Komputer dan Jaringan (TKJ) adalah salah satu program keahlian yang banyak ditawarkan di sekolah menengah kejuruan (SMK) di Indonesia. Jurusan ini berfokus pada penguasaan teknologi informasi dan komunikasi, terutama dalam aspek perangkat keras dan jaringan komputer. Tujuan dari jurusan ini adalah untuk menghasilkan lulusan yang kompeten dalam merancang, mengimplementasikan, serta melakukan perawatan terhadap infrastruktur jaringan dan komputer.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">9</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">324</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TAB ================= -->
+<div id="tabPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Alat Berat (TAB)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Tiopan Saragih, S.Pd, M.M </h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Andre Pratama</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Dendi Kuncoro, S.Pd</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan Teknik Alat Berat menawarkan peluang karier yang menarik dalam industri yang terus berkembang, membutuhkan siswa untuk mempersiapkan diri dengan pengetahuan dan keterampilan yang tepat untuk bersaing di pasar kerja yang kompetitif ini.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">3</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">60</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TBSM ================= -->
+<div id="tbsmPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Bisnis Sepeda dan Motor (TBSM)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Giono, S.Pd</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Tri Rangga Bayu, S.Pd </h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Tri Rangga Bayu, S.Pd </h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan TBSM adalah singkatan dari Teknik dan Bisnis Sepeda Motor. Jurusan ini termasuk dalam bidang keahlian teknologi dan rekayasa yang fokus pada pembelajaran seputar teknik perbaikan, perawatan, serta pengetahuan bisnis dalam industri sepeda motor. Program studi ini biasanya ditawarkan di sekolah menengah kejuruan (SMK) di Indonesia dan dirancang untuk memenuhi kebutuhan industri otomotif khususnya yang berkaitan dengan sepeda motor.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">216</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TKKR ================= -->
+<div id="tkkrPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Kecantikan Kulit dan Rambut (TKKR)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Sri Rahayu Utami, S.Pd </h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Kristina Natalia Br Sitepu, S.Pd</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+  
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan "Tata Kecantikan Kulit dan Rambut" merupakan program studi yang menekankan pada pemahaman tentang perawatan kulit dan rambut serta teknik aplikasi produk kecantikan. Mahasiswa dalam jurusan ini mempelajari berbagai aspek, termasuk analisis kulit, diagnosis masalah kulit, perawatan kulit, teknik pemijatan, dan perawatan rambut. Mereka juga mempelajari tentang berbagai produk perawatan kulit dan rambut, serta teknologi terkini dalam industri kecantikan. Selain itu, mahasiswa juga diajarkan keterampilan komunikasi dan keterampilan bisnis yang diperlukan untuk menjadi profesional kecantikan yang sukses. Program ini bertujuan untuk melatih lulusannya menjadi ahli tata kecantikan yang dapat memberikan layanan berkualitas tinggi dan solusi yang sesuai dengan kebutuhan individu.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">216</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TKRO ================= -->
+<div id="tkroPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Kendaraan Ringan Otomotif  (TKRO)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Rifai Pohan, S.Pd</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Rifai Pohan, S.Pd</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Andre Pratama</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan "Teknik Kendaraan Ringan Otomotif" merupakan program studi yang memfokuskan pada pemahaman dan penerapan teknis dalam perawatan, perbaikan, dan pemeliharaan kendaraan bermotor jenis ringan, seperti mobil dan sepeda motor. Mahasiswa dalam jurusan ini mempelajari dasar-dasar mekanika kendaraan, sistem-sistem mesin, elektronika kendaraan, transmisi, suspensi, dan sistem lainnya. Mereka juga dilatih dalam teknik diagnosis masalah, pemeliharaan preventif, dan perbaikan kendaraan. Selain itu, program ini sering kali mencakup pelatihan dalam penggunaan peralatan dan teknologi terkini yang digunakan dalam industri otomotif. Tujuan utamanya adalah melatih lulusan untuk menjadi teknisi otomotif yang terampil dan terampil dalam memahami, merawat, dan memperbaiki kendaraan ringan secara efisien dan efektif. 
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">216</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= PEMESINAN ================= -->
+<div id="pemesinanPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Pemesinan (PEMESINAN)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Nando Casanofa Sidabutar, S.Pd</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Abidan SImbolon, S.Pd</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Dedi Purnama</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan "Teknik Pemesinan" adalah program studi yang menekankan pada pemahaman dan penerapan prinsip-prinsip teknis dalam proses pembuatan dan produksi komponen mekanis. Siswa dalam jurusan ini mempelajari dasar-dasar mesin, termasuk pembacaan gambar teknik, pemrograman mesin CNC (Computer Numerical Control), proses pemesinan konvensional, dan teknologi manufaktur modern. Mereka juga dilatih dalam pengoperasian peralatan pemesinan, seperti mesin bubut, mesin frais, dan mesin penggiling, serta mempelajari penggunaan perangkat lunak CAD/CAM (Computer-Aided Design/Computer-Aided Manufacturing). Program ini bertujuan untuk melatih lulusannya menjadi teknisi pemesinan yang terampil dan terampil dalam merancang, memproduksi, dan memelihara komponen mesin dengan presisi tinggi sesuai dengan kebutuhan industri.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">216</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TITL ================= -->
+<div id="titlPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Instalasi Tenaga Listrik  (TITL)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Johanes Pasaribu, S.Pd</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Dra. Nurhayati</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Elfando, S.T</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan "Teknik Instalasi Tenaga Listrik" adalah program studi yang fokus pada pemahaman dan penerapan prinsip-prinsip teknis dalam instalasi, perawatan, dan perbaikan sistem tenaga listrik. Mahasiswa dalam jurusan ini mempelajari dasar-dasar listrik, termasuk kelistrikan bangunan, sistem distribusi listrik, peralatan listrik, dan keamanan listrik. Mereka juga dilatih dalam instalasi dan perawatan sistem pencahayaan, sistem kelistrikan industri, sistem energi terbarukan, dan sistem otomasi. Selain itu, mahasiswa juga mempelajari standar keselamatan dan peraturan yang berkaitan dengan instalasi listrik. Program ini bertujuan untuk melatih lulusannya menjadi teknisi instalasi listrik yang terampil dan terampil dalam merancang, menginstal, dan memelihara sistem tenaga listrik yang efisien dan aman sesuai dengan standar industri dan regulasi yang berlaku.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">213</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TJTL ================= -->
+<div id="tjtlPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Jaringan Tenaga Listrik (TJTL)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Mhd Rifki Muslim, S.Pd</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Annita Selliana Siregar, S.Pd</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Elfando, S.T</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div> 
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan "Teknik Jaringan Tenaga Listrik" adalah program studi yang berkaitan dengan perancangan, instalasi, dan pemeliharaan jaringan distribusi tenaga listrik. Mahasiswa dalam jurusan ini mempelajari tentang dasar-dasar listrik, termasuk sistem tenaga listrik, transformator, generator, dan distribusi listrik. Mereka juga belajar tentang perencanaan, desain, dan pengoperasian jaringan distribusi listrik yang efisien dan andal. Fokusnya termasuk analisis jaringan listrik, perlindungan, dan pemeliharaan peralatan. Selain itu, mahasiswa juga dilatih dalam penerapan teknologi terkini seperti sistem monitoring jarak jauh dan pengendalian jaringan listrik. Tujuannya adalah melatih lulusan untuk menjadi profesional yang mampu mengelola dan mengoptimalkan jaringan distribusi tenaga listrik dengan efisien, aman, dan sesuai dengan standar industri yang berlaku.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">3</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">108</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TAV ================= -->
+<div id="tavPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Audio Video  (TAV)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Drs. Mahfuad</h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Jusmen Saragih, S.Pd</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Elfando Nainggolan, S.T</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="mt-5">
+<h4>Tentang Jurusan</h4>
+<p>
+Jurusan "Teknik Audio Video" adalah program studi yang fokus pada pengembangan keterampilan teknis dalam produksi, perekaman, dan pengolahan audio dan video. Mahasiswa dalam jurusan ini mempelajari berbagai aspek produksi audio dan video, termasuk rekayasa suara, pengeditan video, desain audio, teknik penyiaran, dan produksi konten multimedia. Mereka juga dilatih dalam penggunaan peralatan dan perangkat lunak terkini yang digunakan dalam industri, seperti perangkat lunak penyuntingan video, peralatan perekaman audio, dan perangkat keras pengolahan audio. Selain itu, mahasiswa juga mempelajari tentang estetika dan kreativitas dalam produksi konten multimedia, serta aspek hukum dan etika yang terkait dengan industri media. Tujuannya adalah melatih lulusan untuk menjadi profesional yang terampil dan terampil dalam menghasilkan dan mengelola konten audiovisual dengan kualitas tinggi sesuai dengan kebutuhan industri dan pasar.
+</p>
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">216</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TP ================= -->
+<div id="tpPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Pengelasan (TP)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Nando Casanofa Sidabutar,S.Pd </h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Andika Pratam,S.Pd</h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Dedi Purnama</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">3</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">108</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= DPIB ================= -->
+<div id="dpibPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Desain Pemodelan Informasi Bisnis  (DPIB)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Pamoria Sondang, S.Pd </h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Armawinda,S.Pd </h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Sri</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">6</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">216</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- ================= TKP ================= -->
+<div id="tkpPage" class="section-page">
+<div class="container">
+
+<button class="btn btn-outline-dark mb-4" onclick="showPage('homePage')">
+<i class="bi bi-arrow-left"></i> Kembali
+</button>
+
+<h2 class="fw-bold text-center mb-5">
+Teknik Kontruksi dan Perumahan  (TKP)
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Nia Rahmayani,S.Pd </h5>
+<p class="text-muted">Ketua Jurusan</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Sugeng, S.Pd, M.Si </h5>
+<p class="text-muted">Kepala Workshop</p>
+</div>
+
+<div class="col-md-4">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="staff-avatar mb-3">
+<h5>Persadananta Sembiring</h5>
+<p class="text-muted">Toolman</p>
+</div>
+
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-house fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Kelas</p>
+<h3 class="fw-bold">3</h3>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="stat-card d-flex align-items-center gap-3">
+<i class="bi bi-people fs-2 text-primary"></i>
+<div>
+<p class="mb-0 text-muted">Jumlah Siswa</p>
+<h3 class="fw-bold">108</h3>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function showPage(pageId) {
+
+  // Tutup dropdown jika masih terbuka
+  const dropdowns = document.querySelectorAll('.dropdown-menu.show');
+  dropdowns.forEach(d => d.classList.remove('show'));
+
+  // Sembunyikan semua halaman
+  document.querySelectorAll('.section-page').forEach(page => {
+    page.style.display = "none";
+  });
+
+  // Tampilkan halaman aktif
+  const activePage = document.getElementById(pageId);
+  if(activePage){
+    activePage.style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+</script>
+
+<script>
+const USERNAME = "TyaAries";
+const PASSWORD = "TyaCan";
+
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+const rememberMe = document.getElementById("rememberMe");
+const loginBtn = document.getElementById("loginBtn");
+const loadingOverlay = document.getElementById("loadingOverlay");
+
+// Tampilkan username terakhir jika disimpan
+window.onload = () => {
+  const saved = localStorage.getItem("username");
+  if(saved){
+    username.value = saved;
+    rememberMe.checked = true;
+  }
+};
+
+// Toggle password show/hide
+function togglePassword(){
+  password.type = password.type === "password" ? "text" : "password";
+}
+
+// Login function
+loginBtn.addEventListener('click', () => {
+  const u = username.value.trim();
+  const p = password.value.trim();
+
+  if(!u || !p){
+    Swal.fire({
+      icon: 'warning',
+      title: 'Oops!',
+      text: 'Username dan Password wajib diisi',
+      confirmButtonColor: '#cc5500'
+    });
+    return;
+  }
+
+  // 🔄 Tampilkan LOADING overlay dengan animasi fade-in
+  loadingOverlay.classList.add('show');
+  document.getElementById("loginFormContent").style.opacity = '0.3';
+  loginBtn.disabled = true;
+
+  setTimeout(() => {
+    // Sembunyikan overlay
+    loadingOverlay.classList.remove('show');
+    document.getElementById("loginFormContent").style.opacity = '1';
+    loginBtn.disabled = false;
+
+    if(u === USERNAME && p === PASSWORD){
+      rememberMe.checked
+        ? localStorage.setItem("username", u)
+        : localStorage.removeItem("username");
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil Login',
+        text: `Selamat datang, ${u}!`,
+        timer: 2000,
+        showConfirmButton: false,
+        background: '#cc5500',
+        color: '#fff'
+      }).then(() => {
+        const modal = bootstrap.Modal.getInstance(
+          document.getElementById("loginModal")
+        );
+        modal.hide();
+      });
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Gagal',
+        text: 'Username atau Password salah!',
+        confirmButtonColor: '#d33',
+        background: '#cc5500',
+        color: '#fff'
+      });
+    }
+  }, 1500); // simulasi loading
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $('#tabelGuru').DataTable({
+        responsive: true,
+        pageLength: 10
+    });
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+$(document).ready(function () {
+$('#staffTable').DataTable({
+    pageLength: 10,
+    lengthMenu: [10, 25, 50, 100]
+});
+});
+</script>
+
+<footer>
+<div class="container text-center">
+© 2025 SMK Negeri 1 Lubuk Pakam
+</div>
+</footer>
+
+</body>
+</html>
